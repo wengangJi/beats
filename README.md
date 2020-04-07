@@ -8,7 +8,7 @@
 * [Add multiple output objects]
 
 
-### 配置文件
+### config
 * filebeat.yml
 
 ```
