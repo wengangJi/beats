@@ -52,10 +52,10 @@ processors:
     - offset
 
 output.kafka:
-  hosts: ["kafka集群地址"]
+  hosts: ["kafka culuster"]
   worker: 5
   version: "0.11.0.0"
-  topic: "%[topic]" #topic 自动根据k8s服务规则生成
+  topic: "%[topic]" #topic rule
   partition.round_robin:
     group_events: 1
     reachable_only: true
@@ -67,25 +67,25 @@ output.kafka:
   channel_buffer_size: 256
 
 output.qlog:
-  container: true #topic 自动根据k8s服务规则生成
-  idc: "机房"
+  container: true #topic rule
+  idc: "idc"
   timeOut: 10
   minConnNum: 1
   compression: gzip
-  cluster: "qlog下游存储集群地址"
+  cluster: "qlog culster"
   zkServer: [""]
-  hosts: ["qlog集群地址"]
+  hosts: ["qlog cluster"]
 
 output.qlog:
   container: false
-  idc: "机房"
+  idc: "idc"
   timeOut: 10
-  topic: "指定topic"
+  topic: "topic"
   minConnNum: 1
   compression: gzip
-  cluster: "qlog下游存储集群地址"
+  cluster: "qlog cluster"
   zkServer: [""]
-  hosts: ["qlog集群地址"]
+  hosts: ["qlog cluster"]
 
 output.logstash:
   hosts:[""]
