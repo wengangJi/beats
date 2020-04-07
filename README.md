@@ -1,9 +1,9 @@
-## 基于filebeat7.1.1版本进行个性化改造.
+## Customized modification based on file beat.
 ......
 
 
-### 变更内容
-* [增加out多路输出，可同时支持多个out共享同一个pipeline数据通道输出]
+### changelogs，
+* [Add multiplexing out. Multiple outs share the same pipeline]
 * [增加基于k8s label的event数据处理功能，动态根据k8s 服务状态生成topic , 输出k8s deployment、daemonset、statfuleset、job、configmap、pod等对象数据]
 * [增加output支持种类]
 
