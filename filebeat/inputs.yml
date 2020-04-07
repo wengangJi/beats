@@ -1,0 +1,17 @@
+- paths:
+    - /var/log/containers/*.log
+  exclude_files: ['^/var/log/containers/*filebeat.*_kube-system_.*']
+  enabled: true
+  symlinks: true
+  encoding: plain
+  type: log
+  close_inactive: 10m
+  tail_files: true
+  fields:
+    type: k8s-log
+    cluster: ${REGION}
+    hostname: ${HOSTNAME}
+  fields_under_root: true
+  scan_frequency: 10s
+  max_bytes: 1048576        
+  harvester_buffer_size: 65536

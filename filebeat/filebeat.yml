@@ -1,0 +1,67 @@
+filebeat.config.inputs:
+  enabled: true
+  path: /filebeat/*.yml
+  reload.enabled: true
+  reload.period: 10s
+processors:
+- decode_json_fields:
+    fields:
+    - message
+    target: ''
+- add_kubernetes_metadata:
+          in_cluster: true
+          include_labels:
+            - app
+            - labels-app
+            - labels-ns
+          include_annotations:
+            - labels.cloud/controller-kind
+          matchers:
+            - logs_path:
+                logs_path: /var/log/containers
+
+- add_k8s_labels_metadata:
+- drop_fields:
+    fields:
+    - log
+    - agent
+    - beat
+    - input_type
+    - prospector
+    - input
+    - type
+    - kubernetes
+    - version
+    - ephemeral_id
+    - ecs
+
+output.kafka:
+  hosts: ["XX.XX.XX.XX:port"] //kafka集群地址
+  worker: 5                   //kafka worker数 
+  version: "0.11.0.0"
+  topic: '%{[topic]}'         //根据processes 根据服务对象动态生成topic 如k8s_docker_部署名_命名空间_top 等
+  partition.round_robin:      //kafka 负载分区 round_robi会使kafka borker 较为均衡
+    group_events: 1
+    reachable_only: true
+  required_acks: 1
+  keep_alive: 10
+  compression: snappy          //压缩
+  max_message_bytes: 1048576   
+  bulk_max_size: 2048
+  channel_buffer_size: 256
+
+output.qlog:        //多路输出output 该版本支持多个output输出
+  container: true //是否容器环境
+  idc: "XXXX"  //机房
+  timeOut: 10  //连接超时时间
+  minConnNum: 1 //最小连接数
+  topic: "" //是否动态生成topic
+  compression: gzip // 压缩
+  cluster: "XXXX_XX_XXXX" //指定集群
+  zkServer: ["XXXX_XXXX_XXXX"] //如果下游对接kafka ，可以通过和zk交互动态创建kafka集群相关配置，减少人工干预。
+  hosts: ["XXXX_XXXX_XXXX"]// 服务集群地址
+  
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  
+  
