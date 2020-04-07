@@ -4,8 +4,8 @@
 
 ### changelogs，
 * [Add multiplexing out. Multiple outs share the same pipeline]
-* [增加基于k8s label的event数据处理功能，动态根据k8s 服务状态生成topic , 输出k8s deployment、daemonset、statfuleset、job、configmap、pod等对象数据]
-* [增加output支持种类]
+* [Add event handler based on K8S label. It outputs k8s deployment、daemonset、statfuleset、job、configmap、pod and generate k8s topic dynamically]
+* [Add multiple output objects]
 
 
 ### 配置文件
